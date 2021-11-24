@@ -5,7 +5,7 @@
 SELECT *
 INTO dbo.updatedNashvilleHousing
 FROM PortfolioProject..nashvilleHousing
-----------------------------------------------------------
+```
 ---Standardize Date Format
 
 SELECT *
@@ -19,8 +19,8 @@ ADD SalesDataConverted Date;
 
 UPDATE dbo.updatedNashvilleHousing
 SET SalesDataConverted = CONVERT(Date, SaleDate)
-----------------------------------------------------------
-
+```
+```
 ---Populate Propety Address
 
 SELECT PropertyAddress
@@ -40,8 +40,8 @@ JOIN dbo.updatedNashvilleHousing b
 	ON a.ParcelID = b.ParcelID
 	AND a.UniqueID <> b.UniqueID
 WHERE a.PropertyAddress IS NULL
---------------------------------------------------
-
+```
+```
 --- Breaking out Address into individual  Columns (Address, City, State)
 ---ex.1 Property Address
 SELECT PropertyAddress
@@ -81,7 +81,8 @@ SET
 	OwnerSplitCity = PARSENAME(REPLACE(OwnerAddress,',','.'), 2),
 	OwnerSplitState = PARSENAME(REPLACE(OwnerAddress,',','.'), 1)
 
--------------------------------------------------------------------------------------------------------------
+```
+```
 --- Change Y and N to Yes and No in "Sold as Vacant" field
 SELECT SoldAsVacant, COUNT(SoldAsVacant)
 FROM dbo.updatedNashvilleHousing
@@ -104,7 +105,8 @@ SET SoldAsVacant = CASE
 		END
 
 
--------------------------------------------------------------------------------------------------------------
+```
+```
 ---Remove Duplicates, standard practice to have temp tables instead of deleting data
 WITH RowNumCTE AS(
 SELECT *,
@@ -128,10 +130,8 @@ ORDER BY PropertyAddress
 DELETE
 FROM RowNumCTE
 WHERE row_num > 1
-
-
--------------------------------------------------------------------------------------------------------------
-
+```
+```
 ---Delete Unused Columns
 
 ALTER TABLE dbo.updatedNashvilleHousing
