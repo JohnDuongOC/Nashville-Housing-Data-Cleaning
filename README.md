@@ -1,4 +1,6 @@
 # Nashville-Housing-Data-Cleaning
+In this project provided by Alex the Analyst Youtube series, I was able to practice writing SQL queries and improve my data cleaning skills. 
+
 ```
 --- Create Temp Table
 SELECT *
@@ -44,7 +46,7 @@ WHERE a.PropertyAddress IS NULL
 
 ```
 --- Breaking out Address into individual  Columns (Address, City, State)
----ex.1 Property Address
+--ex.1 Property Address
 SELECT PropertyAddress
 FROM dbo.updatedNashvilleHousing
 
@@ -63,7 +65,7 @@ SET
 	PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1),
 	PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) +1, LEN(PropertyAddress))
 
----ex.2 OwnerAddress
+--ex.2 OwnerAddress
 SELECT
 PARSENAME(REPLACE(OwnerAddress,',','.'), 3),
 PARSENAME(REPLACE(OwnerAddress,',','.'), 2),
