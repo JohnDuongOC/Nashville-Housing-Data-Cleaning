@@ -1,13 +1,13 @@
 # Nashville-Housing-Data-Cleaning
 ```
 --- Create Temp Table
-
 SELECT *
 INTO dbo.updatedNashvilleHousing
 FROM PortfolioProject..nashvilleHousing
 ```
----Standardize Date Format
 
+```
+---Standardize Date Format
 SELECT *
 FROM dbo.updatedNashvilleHousing
 
@@ -20,9 +20,9 @@ ADD SalesDataConverted Date;
 UPDATE dbo.updatedNashvilleHousing
 SET SalesDataConverted = CONVERT(Date, SaleDate)
 ```
+
 ```
 ---Populate Propety Address
-
 SELECT PropertyAddress
 FROM dbo.updatedNashvilleHousing
 
@@ -41,6 +41,7 @@ JOIN dbo.updatedNashvilleHousing b
 	AND a.UniqueID <> b.UniqueID
 WHERE a.PropertyAddress IS NULL
 ```
+
 ```
 --- Breaking out Address into individual  Columns (Address, City, State)
 ---ex.1 Property Address
@@ -80,8 +81,8 @@ SET
 	OwnerSplitAddress = PARSENAME(REPLACE(OwnerAddress,',','.'), 3),
 	OwnerSplitCity = PARSENAME(REPLACE(OwnerAddress,',','.'), 2),
 	OwnerSplitState = PARSENAME(REPLACE(OwnerAddress,',','.'), 1)
-
 ```
+
 ```
 --- Change Y and N to Yes and No in "Sold as Vacant" field
 SELECT SoldAsVacant, COUNT(SoldAsVacant)
@@ -103,9 +104,8 @@ SET SoldAsVacant = CASE
 		WHEN SoldAsVacant = 'N' THEN 'No'
 		ELSE SoldAsVacant
 		END
-
-
 ```
+
 ```
 ---Remove Duplicates, standard practice to have temp tables instead of deleting data
 WITH RowNumCTE AS(
@@ -131,6 +131,7 @@ DELETE
 FROM RowNumCTE
 WHERE row_num > 1
 ```
+
 ```
 ---Delete Unused Columns
 
